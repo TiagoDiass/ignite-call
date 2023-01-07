@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import * as S from './Register.styles';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const registerFormSchema = z.object({
   username: z
@@ -22,12 +24,18 @@ const registerFormSchema = z.object({
 type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 export function Register() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
+    defaultValues: {
+      username: router.query.username ? (router.query.username as string) : '',
+    },
   });
 
   async function handleRegister(values: RegisterFormValues) {
