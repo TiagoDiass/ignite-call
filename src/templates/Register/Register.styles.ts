@@ -32,3 +32,7 @@ export const Form = styled(Box, {
     rowGap: '$2',
   },
 });
+
+export const FormError = styled(Text, {
+  color: '#EC7063',
+});
