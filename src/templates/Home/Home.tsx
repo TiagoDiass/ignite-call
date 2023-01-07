@@ -5,7 +5,7 @@ import * as S from './Home.styles';
 import calendarImage from '../../assets/app-preview.png';
 import { ClaimUsernameForm } from './Elements/ClaimUsernameForm/ClaimUsernameForm';
 
-export default function Home() {
+export function Home() {
   return (
     <S.Wrapper>
       <S.CallToActionContentWrapper>
