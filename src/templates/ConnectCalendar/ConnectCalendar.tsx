@@ -1,15 +1,17 @@
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react';
-import { ArrowRight, Check, CheckCircle } from 'phosphor-react';
+import { signIn, useSession } from 'next-auth/react';
+import { ArrowRight, Check } from 'phosphor-react';
 import { useState } from 'react';
 
 import * as RegisterStyles from '../Register/Register.styles';
 import * as S from './ConnectCalendar.styles';
 
 export function ConnectCalendar() {
-  const [userConnectedCalendar, setUserConnectedCalendar] = useState(false);
+  const session = useSession();
+  const [userConnectedCalendar, _setUserConnectedCalendar] = useState(false);
 
   const handleConnectCalendar = () => {
-    setUserConnectedCalendar(true);
+    signIn('google');
   };
 
   return (
