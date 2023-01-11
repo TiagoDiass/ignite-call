@@ -1,5 +1,6 @@
 import { Button, Heading, MultiStep, Text } from '@ignite-ui/react';
 import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { ArrowRight, Check } from 'phosphor-react';
 import { useState } from 'react';
 
@@ -8,7 +9,10 @@ import * as S from './ConnectCalendar.styles';
 
 export function ConnectCalendar() {
   const session = useSession();
-  const [userConnectedCalendar, _setUserConnectedCalendar] = useState(false);
+  const router = useRouter();
+
+  const hasAuthError = !!router.query.error;
+  const userSignedIn = session.status === 'authenticated';
 
   const handleConnectCalendar = () => {
     signIn('google');
@@ -31,8 +35,8 @@ export function ConnectCalendar() {
         <S.ConnectItem>
           <Text>Google Agenda</Text>
 
-          {userConnectedCalendar ? (
-            <Button disabled>
+          {userSignedIn ? (
+            <Button size='sm' disabled>
               Conectado <Check />
             </Button>
           ) : (
@@ -46,7 +50,14 @@ export function ConnectCalendar() {
           )}
         </S.ConnectItem>
 
-        <Button type='submit' disabled={!userConnectedCalendar}>
+        {hasAuthError && (
+          <S.AuthError size='sm'>
+            Falha ao se conectar ao Google, verifique se você habilitou as
+            permissões de acesso ao Google Calendar.
+          </S.AuthError>
+        )}
+
+        <Button type='submit' disabled={!userSignedIn}>
           Próximo passo <ArrowRight />
         </Button>
       </S.ConnectBox>
