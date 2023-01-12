@@ -2,7 +2,6 @@ import { Button, Heading, MultiStep, Text } from '@ignite-ui/react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { ArrowRight, Check } from 'phosphor-react';
-import { useState } from 'react';
 
 import * as RegisterStyles from '../Register/Register.styles';
 import * as S from './ConnectCalendar.styles';
