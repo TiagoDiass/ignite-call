@@ -17,6 +17,10 @@ export function ConnectCalendar() {
     signIn('google');
   };
 
+  const handleNavigateToTimeIntervals = () => {
+    router.push('/register/time-intervals');
+  };
+
   return (
     <RegisterStyles.Wrapper>
       <RegisterStyles.Header>
@@ -56,7 +60,11 @@ export function ConnectCalendar() {
           </S.AuthError>
         )}
 
-        <Button type='submit' disabled={!userSignedIn}>
+        <Button
+          type='submit'
+          disabled={!userSignedIn}
+          onClick={handleNavigateToTimeIntervals}
+        >
           Próximo passo <ArrowRight />
         </Button>
       </S.ConnectBox>
