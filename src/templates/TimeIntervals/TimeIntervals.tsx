@@ -7,6 +7,7 @@ import {
   TextInput,
   Button,
 } from '@ignite-ui/react';
+import { useRouter } from 'next/router';
 import { ArrowRight } from 'phosphor-react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { api } from '../../lib/axios';
@@ -41,6 +42,7 @@ export function TimeIntervals() {
       ],
     },
   });
+  const router = useRouter();
 
   const weekDays = getWeekDays();
 
@@ -52,7 +54,8 @@ export function TimeIntervals() {
   const intervals = watch('intervals');
 
   const handleSetTimeIntervals = async (values: TimeIntervalsFormOutput) => {
-    await api.post('/users/time-intervals', values);
+    await api.post('/users/time-intervals', { intervals: values.intervals });
+    await router.push('/register/update-profile');
   };
 
   return (
