@@ -9,6 +9,7 @@ import {
 } from '@ignite-ui/react';
 import { ArrowRight } from 'phosphor-react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { api } from '../../lib/axios';
 import { getWeekDays } from '../../utils/get-week-days';
 
 import * as RegisterStyles from '../Register/Register.styles';
@@ -51,7 +52,7 @@ export function TimeIntervals() {
   const intervals = watch('intervals');
 
   const handleSetTimeIntervals = async (values: TimeIntervalsFormOutput) => {
-    console.log(values);
+    await api.post('/users/time-intervals', values);
   };
 
   return (
