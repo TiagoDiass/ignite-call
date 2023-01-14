@@ -8,9 +8,11 @@ import {
   TextArea,
 } from '@ignite-ui/react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { ArrowRight } from 'phosphor-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { api } from '../../lib/axios';
 import * as RegisterStyles from '../Register/Register.styles';
 import * as S from './UpdateProfile.styles';
 
@@ -22,6 +24,7 @@ type UpdateProfileForm = z.infer<typeof updateProfileSchema>;
 
 export function UpdateProfile() {
   const session = useSession();
+  const router = useRouter();
 
   const {
     register,
@@ -31,7 +34,13 @@ export function UpdateProfile() {
     resolver: zodResolver(updateProfileSchema),
   });
 
-  async function handleUpdateProfile(values: UpdateProfileForm) {}
+  async function handleUpdateProfile(values: UpdateProfileForm) {
+    await api.patch('/users/profile', {
+      bio: values.bio,
+    });
+
+    await router.push(`/schedule/${session.data?.user.username}`);
+  }
 
   if (session.status === 'loading') {
     return null;
@@ -53,7 +62,10 @@ export function UpdateProfile() {
         <label>
           <Text size='sm'>Foto de perfil</Text>
 
-          <Avatar src={session.data?.user.avatar_url} />
+          <Avatar
+            src={session.data?.user.avatar_url}
+            alt={session.data?.user.name}
+          />
         </label>
 
         <label>
